@@ -1,0 +1,26 @@
+#/*
+#|--------------------------------------------------------------------------
+#| requerimento.routing.yml
+#|--------------------------------------------------------------------------
+#| AArquivo onde informamos a rota em nosso site Drupal
+#| author Gianlucca Augusto <gianlucca.augusto@extreme.digital>
+#| version 1.0
+#| copyright Proderj 2022.
+#*/
+requerimento_form:
+  path: '/formulario-requerimento'
+  defaults:
+    _form: '\Drupal\requerimento\Form\requerimentoForm'
+    _title: 'Form'
+  requirements:
+   _permission: 'access content'
+
+requerimento.admin_settings_form:  
+  path: '/admin/config/requerimento/adminsettings'
+  defaults:  
+    _title: 'Formulário' 
+    _form: '\Drupal\requerimento\Form\requerimentoAdminForm'   
+  requirements:  
+    _permission: 'access administration pages'  
+  options:  
+    _admin_route: TRUE

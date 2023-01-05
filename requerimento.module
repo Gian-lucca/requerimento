@@ -1,0 +1,119 @@
+<?php
+/*
+|--------------------------------------------------------------------------
+| requerimento.module
+|--------------------------------------------------------------------------|
+| Arquivo é onde implementamos o layout que será enviado para o emails 
+| usuário
+| author Gianlucca Augusto <gianlucca.augusto@extreme.digital>
+| version 1.0
+| copyright Proderj 2022.
+*/
+
+/**
+ * @file
+ * Formulário
+ */
+
+use Drupal\Component\Utility\Html;
+
+/**
+ * Implements hook_mail().
+ */
+function requerimento_mail($key, &$message, $params) {
+  switch ($key) {
+    case 'requerimento_notificacao':
+      $message['from'] = \Drupal::config('system.site')->get('email');
+      $site_name = \Drupal::config('system.site')->get('nome');
+
+      $message['subject'] = $site_name . ": " . t('Novo Formulário de Requerimento');
+
+      $message_body['concurso'] = $params['message']['concurso'];
+      $message_body['ano'] = $params['message']['ano'];
+      $message_body['cargo'] = $params['message']['cargo'];
+      $message_body['incricao'] = $params['message']['incricao'];
+      $message_body['nome'] = $params['message']['nome'];
+      $message_body['nascimento'] = $params['message']['nascimento'];
+      $message_body['nomemae'] = $params['message']['nomemae'];
+      $message_body['nomepai'] = $params['message']['nomepai'];
+      $message_body['civil'] = $params['message']['civil'];
+      $message_body['RG'] = $params['message']['RG'];
+      $message_body['CPF'] = $params['message']['CPF'];
+      $message_body['logradouro'] = $params['message']['logradouro'];
+      $message_body['bairro'] = $params['message']['bairro'];
+      $message_body['cidade'] = $params['message']['cidade'];
+      $message_body['estado'] = $params['message']['estado'];
+      $message_body['CEP'] = $params['message']['CEP'];
+      $message_body['email'] = $params['message']['email'];
+      $message_body['telefone'] = $params['message']['telefone'];
+      $message_body['msg'] = $params['message']['msg'];
+      $message_body['ciencia'] = $params['message']['ciencia'];
+      
+      /**
+       * Chama o template requerimento_notificacao
+       */
+      $message_theme_body = array(
+        '#theme' => 'requerimento_notificacao',
+        '#message_body' => $message_body,
+       );
+      
+      $message_render = \Drupal::service('renderer')->render($message_theme_body);
+      $message['body'][] = Html::escape($message_render);
+      $message['headers']['Content-Type'] = 'text/html; charset=UTF-8; format=flowed;';
+      break;
+
+      case 'requerimento_protocolo':
+        $message['from'] = \Drupal::config('system.site')->get('email');
+        $site_name = \Drupal::config('system.site')->get('nome');
+  
+        $message['subject'] = $site_name . ": " . t('Confirmação do Formulário de Requerimento');
+  
+        $message_body['concurso'] = $params['message']['concurso'];
+        $message_body['ano'] = $params['message']['ano'];
+        $message_body['cargo'] = $params['message']['cargo'];
+        $message_body['incricao'] = $params['message']['incricao'];
+        $message_body['nome'] = $params['message']['nome'];
+        $message_body['nascimento'] = $params['message']['nascimento'];
+        $message_body['nomemae'] = $params['message']['nomemae'];
+        $message_body['nomepai'] = $params['message']['nomepai'];
+        $message_body['civil'] = $params['message']['civil'];
+        $message_body['RG'] = $params['message']['RG'];
+        $message_body['CPF'] = $params['message']['CPF'];
+        $message_body['logradouro'] = $params['message']['logradouro'];
+        $message_body['bairro'] = $params['message']['bairro'];
+        $message_body['cidade'] = $params['message']['cidade'];
+        $message_body['estado'] = $params['message']['estado'];
+        $message_body['CEP'] = $params['message']['CEP'];
+        $message_body['email'] = $params['message']['email'];
+        $message_body['telefone'] = $params['message']['telefone'];
+        $message_body['msg'] = $params['message']['msg'];
+        $message_body['ciencia'] = $params['message']['ciencia'];
+        
+        /**
+         * Chama o template requerimento_protocolo
+         */
+        $message_theme_body = array(
+          '#theme' => 'requerimento_protocolo',
+          '#message_body' => $message_body,
+         );
+        
+        $message_render = \Drupal::service('renderer')->render($message_theme_body);
+        $message['body'][] = Html::escape($message_render);
+        $message['headers']['Content-Type'] = 'text/html; charset=UTF-8; format=flowed;';
+        break;
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function requerimento_theme($existing, $type, $theme, $path) {
+  return [
+    'requerimento_notificacao' => [
+      'variables' => ['message_body' => NULL],
+    ],
+    'requerimento_protocolo' => [
+      'variables' => ['message_body' => NULL],
+    ]
+  ];
+}

@@ -1,0 +1,17 @@
+<h2><b>Resposta do Formulário Para Exposição Cultural</b></h2>
+<p>Olá {{ message_body.nome }}, seu contato foi enviado com sucesso referente a Mensagem abaixo:</p>
+
+{# Select Tipo de Atendimento #}
+{% if message_body.tipodeatendimento == 0 %}
+  <p><b>Tipo</b>: Declaração de Aprovação em Concurso</p>
+{% elseif message_body.tipodeatendimento == 1 %}
+  <p><b>Tipo</b>: Declaração de Presença em Dia de Prova</p>
+{% elseif message_body.tipodeatendimento == 2 %}
+  <p><b>Tipo</b>: Correção de Dados Pessoais</p>
+{% elseif message_body.tipodeatendimento == 3 %}
+  <p><b>Tipo</b>: Declaração de Participação em Banca Examinadora</p>
+{% else %}
+  <p><b>Tipo</b>: Outros</p>
+{% endif %}
+
+<p><b>Mensagem</b>: {{ message_body.msg }}</p>

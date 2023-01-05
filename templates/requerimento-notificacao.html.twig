@@ -1,0 +1,82 @@
+<h2><b>Formulário de Requerimento</b></h2>
+
+{# Select Tipo de Atendimento #}
+{% if message_body.tipodeatendimento == 0 %}
+  <p><b>Tipo</b>: Declaração de Aprovação em Concurso</p>
+{% elseif message_body.tipodeatendimento == 1 %}
+  <p><b>Tipo</b>: Declaração de Presença em Dia de Prova</p>
+{% elseif message_body.tipodeatendimento == 2 %}
+  <p><b>Tipo</b>: Correção de Dados Pessoais</p>
+{% elseif message_body.tipodeatendimento == 3 %}
+  <p><b>Tipo</b>: Declaração de Participação em Banca Examinadora</p>
+{% else %}
+  <p><b>Tipo</b>: Outros</p>
+{% endif %}
+
+<p><b>Concurso</b>: {{ message_body.concurso }}</p>
+<p><b>Ano de realização do concurso</b>: {{ message_body.ano }}</p>
+<p><b>Nome ou Designação do Cargo/Vaga concorrido</b>: {{ message_body.cargo }}</p>
+<p><b>Nº da Inscrição</b>: {{ message_body.incricao }}</p>
+<p><b>Nome</b>: {{ message_body.nome }}</p>
+<p><b>Data de Nascimento</b>: {{ message_body.nascimento }}</p>
+<p><b>Filiação: Mãe</b>: {{ message_body.nomemae }}</p>
+<p><b>Filiação: Pai</b>: {{ message_body.nomepai }}</p>
+
+{# Select Estado Civil #}
+{% if message_body.civil == 0 %}ss
+  <p><b>Estado Civil</b>: Solteiro</p>
+{% elseif message_body.civil == 1 %}
+  <p><b>Estado Civil</b>: Casado</p>
+{% elseif message_body.civil == 2 %}
+  <p><b>Estado Civil</b>: Divorciado</p>
+{% elseif message_body.civil == 3 %}
+  <p><b>Estado Civil</b>: Viúvo</p>
+{% elseif message_body.civil == 4 %}
+  <p><b>Estado Civil</b>: Separado Judicialmente</p>
+{% else %}
+  <p><b>Estado Civil</b>: União Estável</p>
+{% endif %}
+
+<p><b>RG</b>: {{ message_body.RG }}</p>
+<p><b>CPF</b>: {{ message_body.CPF }}</p>
+<p><b>Endereço</b>: {{ message_body.logradouro }}</p>
+<p><b>Bairro</b>: {{ message_body.bairro }}</p>
+<p><b>Cidade</b>: {{ message_body.cidade }}</p>
+<p><b>Estado</b>: {{ message_body.estado }}</p>
+<p><b>Código Postal</b>: {{ message_body.CEP }}</p>
+<p><b>Telefone</b>: {{ message_body.telefone }}</p>
+<p><b>E-mail</b>: {{ message_body.email }}</p>
+<p><b>Fundamentação</b>: {{ message_body.msg }}</p>
+<p><b>ciencia</b>: {{ message_body.ciencia }}</p>
+
+<style>
+/* unvisited link */
+a:link {
+  color: #006aa7;
+  text-decoration:none
+}
+
+/* visited link */
+a:visited {
+  color: green;
+}
+
+/* mouse over link */
+a:hover {
+  color: #003757;
+  text-decoration: underline;
+}
+
+/* selected link */
+a:active {
+  color: #2c3e4c;
+} 
+</style>
+<ul>
+    {% for file in message_body.arquivo %}
+        <li><a href="{{ file[1] }}" target="_blank">{{ file[0] }}</a></li>
+    {% else %}
+        <li>Nenhum arquivo</li>
+    {% endfor %}
+    
+</ul>
